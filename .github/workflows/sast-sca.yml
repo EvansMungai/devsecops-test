@@ -61,7 +61,7 @@ jobs:
     name: Run SonarQube Cloud Analysis on frontend project
     runs-on: ubuntu-latest
     permissions:
-      pull_request: write
+      pull-request: write
       contents: read
 
     steps:
