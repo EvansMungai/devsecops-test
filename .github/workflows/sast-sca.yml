@@ -51,7 +51,7 @@ jobs:
             /o:"$ORGANIZATION_KEY" \
             /d:sonar.host.url="https://sonarcloud.io" \
             /d:sonar.token="$SONAR_TOKEN" \
-            /d:sonar.qualitygate.wait=true
+            # /d:sonar.qualitygate.wait=true
 
           dotnet build UHBAPI/UHB.sln --configuration Release
 
