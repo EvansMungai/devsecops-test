@@ -88,7 +88,7 @@ jobs:
           SONAR_PROJECT_KEY: ${{ secrets.FRONTEND_PROJECT_KEY }}
           SONAR_ORGANIZATION: ${{ secrets.ORGANIZATION_KEY }}
 
-  Build Backend Image:
+  build_backend_image:
     name: Build Backend Image
     needs: backend-sast-scan
     runs-on: ubuntu-latest
@@ -111,7 +111,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/UHB-backend:${{ github.sha }}
 
-  Build Frontend Image: 
+  build_frontend_image: 
     name: Build Frontend Image
     needs: frontend-sast-scan
     runs-on: ubuntu-latest
