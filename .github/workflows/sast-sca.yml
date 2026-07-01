@@ -88,7 +88,7 @@ jobs:
           SONAR_PROJECT_KEY: ${{ secrets.FRONTEND_PROJECT_KEY }}
           SONAR_ORGANIZATION: ${{ secrets.ORGANIZATION_KEY }}
 
-  build_backend_image:
+  build-backend-image:
     name: Build Backend Image
     needs: backend-sast-scan
     runs-on: ubuntu-latest
@@ -133,3 +133,51 @@ jobs:
           file: ./UHBUI/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/UHB-frontend:${{ github.sha }}
+
+  backend-sca-scan:
+    name: Backend SCA Image scan
+    needs: build-backend-image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Log in to Docker Hub
+        uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee
+        with: 
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          
+      - name: Scan pushed backend image
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
+        with: 
+          scan-type: 'image'
+          image-ref: '${{ secrets.DOCKER_HUB_USERNAME }}/UHB-backend:${{ github.sha }}
+          format: 'sarif'
+          output: 'trivy-image-results.sarif'
+          severity: 'HIGH,CRITICAL'
+          exit-code: 1
+
+  frontend-sca-scan:
+    name: Frontend SCA image scan (Trivy)
+    needs: build_frontend_image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Log in to Docker Hub
+        uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee
+        with: 
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Scan pushed frontend image
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
+        with: 
+          scan-type: 'image'
+          image-ref: '${{ secrets.DOCKER_HUB_USERNAME }}/UHB-frontend:${{ github.sha }}
+          format: 'sarif'
+          output: 'trivy-image-results.sarif'
+          severity: 'HIGH,CRITICAL'
+          exit-code: 1
