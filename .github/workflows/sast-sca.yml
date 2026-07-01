@@ -183,7 +183,7 @@ jobs:
         uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
         with: 
           scan-type: 'image'
-          image-ref: '${{ secrets.DOCKER_HUB_USERNAME }}/UHB-frontend:${{ github.sha }}
+          image-ref: '${{ secrets.DOCKER_HUB_USERNAME }}/UHB-frontend:${{ github.sha }}'
           format: 'sarif'
           output: 'trivy-frontend-image-results.sarif'
           severity: 'HIGH,CRITICAL'
