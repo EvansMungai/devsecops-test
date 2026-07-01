@@ -17,6 +17,7 @@ COPY --from=build /app /usr/src
 
 ARG SONAR_HOST_URL="https://sonarcloud.io"
 ARG SONAR_TOKEN
+ENV SONAR_TOKEN=$SONAR_TOKEN
 
 RUN sonar-scanner \
   -Dsonar.host.url=${SONAR_HOST_URL} \
