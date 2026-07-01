@@ -41,7 +41,7 @@ jobs:
 
       - name: Build and Analyze
         env: 
-          PROJECT_KEY: ${{ secrets.PROJECT_KEY }}
+          PROJECT_KEY: ${{ secrets.BACKEND_PROJECT_KEY }}
           ORGANIZATION_KEY: ${{ secrets.ORGANIZATION_KEY }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
 
@@ -61,7 +61,7 @@ jobs:
     name: Run SonarQube Cloud Analysis on frontend project
     runs-on: ubuntu-latest
     permissions:
-      pull-request: write
+      pull-requests: write
       contents: read
 
     steps:
