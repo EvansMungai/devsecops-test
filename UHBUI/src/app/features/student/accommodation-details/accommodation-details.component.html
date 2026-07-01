@@ -1,0 +1,45 @@
+<h1 class="text-2xl md:text-[35px] font-bold text-center">STUDENT ACCOMMODATION DETAILS</h1>
+<p class="my-3 md:my-5 text-sm md:text-base">View a clear and detailed overview of your accommodation details. All your
+    key information, including room
+    number, hostel name, and any required actions, is
+    neatly displayed in an easy-to-read table. With everything organized in one place, this page helps you stay on top
+    of your application journey effortlessly.</p>
+<app-card [title]="cardTitle" baseStyles="card card-compact bg-base-100 shadow-xl">
+    @defer(when tableData()){
+    <div class="mt-6">
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold pb-2 border-b border-gray-200 mb-4">
+                Accommodation Information
+            </h3>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <span class="font-medium text-gray-600">Application ID:</span>
+                    <span class="ml-2">{{ tableData()?.applicationNo}}</span>
+                </div>
+                <div>
+                    <span class="font-medium text-gray-600">Application Period:</span>
+                    <span class="ml-2">{{ tableData()?.applicationPeriod}}</span>
+                </div>
+                <div>
+                    <span class="font-medium text-gray-600">Registration Number:</span>
+                    <span class="ml-2">{{tableData()?.registrationNo}}</span>
+                </div>
+                <div>
+                    <span class="font-medium text-gray-600">Status:</span>
+                    <span class="ml-2">{{tableData()?.status}}</span>
+                </div>
+                <div>
+                    <span class="font-medium text-gray-600">Preferred Hostel:</span>
+                    <span class="ml-2">{{tableData()?.preferredHostel}}</span>
+                </div>
+                <div>
+                    <span class="font-medium text-gray-600">Room Number:</span>
+                    <span class="ml-2">{{tableData()?.roomNo}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    } @placeholder{
+    <app-loading [styles]="loadingStyles" />
+    }
+</app-card>

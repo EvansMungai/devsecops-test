@@ -1,0 +1,38 @@
+<h1 class="text-[35px] font-bold">Welcome aboard!</h1>
+<p class="my-5">Welcome to the University Hostel Booking Dashboard! This app is your go-to place for all important
+    information concerning Hostel Booking and Allocation. Below, you will find your student details as recorded in the
+    system. Please verify that the information is accurate to ensure a smooth booking experience. If any details appear
+    incorrect, kindly reach out to the administration for assistance.</p>
+<app-card [title]="cardTitle" baseStyles="card card-compact bg-base-100 shadow-xl">
+    @defer(when studentData()){
+    <div class="mt-6">
+        <h3 class="text-lg font-semibold pb-2 border-b border-gray-200 mb-4">
+            Personal Information
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4">
+            <div>
+                <span class="font-medium text-gray-600">Registration Number:</span>
+                <span class="ml-2">{{studentData()?.regNo}}</span>
+            </div>
+            <div>
+                <span class="font-medium text-gray-600">Surname:</span>
+                <span class="ml-2">{{studentData()?.surname}}</span>
+            </div>
+            <div>
+                <span class="font-medium text-gray-600">First Name:</span>
+                <span class="ml-2">{{studentData()?.firstName}}</span>
+            </div>
+            <div>
+                <span class="font-medium text-gray-600">Second Name:</span>
+                <span class="ml-2">{{studentData()?.secondName}}</span>
+            </div>
+            <div>
+                <span class="font-medium text-gray-600">Gender:</span>
+                <span class="ml-2">{{studentData()?.gender}}</span>
+            </div>
+        </div>
+    </div>
+    } @placeholder {
+    <app-loading [styles]="loadingStyles" />
+    }
+</app-card>

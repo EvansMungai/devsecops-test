@@ -1,0 +1,24 @@
+<h1 class="text-[35px] font-bold">Welcome to the Matron dashboard!</h1>
+<p class="mt-3">Access a comprehensive and organized overview of all successful accommodation applications. Essential
+    details such
+    as applicant names, room requests, and application statuses are clearly displayed in a user-friendly table. This
+    page allows you to effortlessly review each application and allocate rooms, helping you make informed decisions with
+    ease
+</p>
+<div class="flex flex-col md:flex-row">
+    <app-card [title]="'Successful Applications'" baseStyles="card bg-accent shadow-xl rounded-lg m-3 flex-1">
+        <div class="flex flex-1">
+            <p class="font-bold m-1">{{tableData()?.length}}</p>
+        </div>
+    </app-card>
+    <app-card [title]="'Total Rooms'" baseStyles="card bg-accent shadow-xl rounded-lg m-3 py-1 flex-1">
+        <p class="font-bold">{{roomData()?.length }}</p>
+    </app-card>
+</div>
+<app-card [title]="'Total Applications'" baseStyles="card card-lg bg-base-100 shadow-xl my-3">
+    @defer(when roomData()){
+    <app-table [data]="tableData()" [columns]="tableColumns" [showActionColumn]="true" [actionColumn]="tableActions" />
+} @placeholder{
+    <app-loading [styles]="loadingStyles" />
+}
+</app-card>

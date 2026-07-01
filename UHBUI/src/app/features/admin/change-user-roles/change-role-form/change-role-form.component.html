@@ -1,0 +1,29 @@
+<form id="changeRoleForm" [formGroup]="changeUserRoleForm" (ngSubmit)="onSubmit()" #form="ngForm"
+  class="flex flex-1 flex-col mx-auto m-[2%] p-[2%]">
+  <h3 class="text-lg font-bold text-center">CHANGE ROLE FORM</h3>
+  <label for="Username" class="text-lg font-medium">Username:</label>
+  <input type="Username" id="Username" name="Username" class="input input-bordered input-sm bg-white w-full"
+    [placeholder]="username" [value]="username" disabled>
+  <label for="Role" class="text-lg font-medium">Role:</label>
+  @defer(when rolesData()){
+  <select id="Role" formControlName="role"
+    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+    <option value="" selected disabled>Select Role</option>
+    @for(role of rolesData(); track role){
+    <option value="{{role}}">{{role}}</option>
+    }
+  </select>
+  @if (changeUserRoleForm.get('role')?.invalid && form.submitted) {
+  <p class="text-red-500 text-xs ml-1 mb-3">
+    Role is required.
+  </p>
+  }
+  } @placeholder{
+    <app-loading [styles]="loadingStyles" />
+  }
+  <div class="mt-4">
+    <app-button [buttonProps]="submitButtonProps" />
+  </div>
+  <app-toast [showToast]="toastVisible()" [styles]="toastStyles()" [alertStyle]="alertStyles()"
+    [alertMessage]="alertMessage()" />
+</form>

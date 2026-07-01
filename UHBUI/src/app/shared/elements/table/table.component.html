@@ -1,0 +1,48 @@
+<div class="relative flex flex-col overflow-auto p-4">
+  <table [ngClass]="tableStyles">
+    <thead>
+      <tr>
+        <th class="w-[5px] text-md font-semibold text-black">Sr. No</th>
+        @for (column of columns; track column) {
+          <th [ngClass]="headerStyles"
+            (click)="column.sortable ? sortTable(column.key) : null">{{column.header}}
+            @if (column.sortable) {
+              <span>
+                {{ sortKey === column.key ? (sortDirection === 'asc' ? '↑' : '↓') : '⇅' }}
+              </span>
+            }
+          </th>
+        }
+        @if (showActionColumn) {
+          <th [ngClass]="headerStyles">Action</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of sortedData; track row; let sr = $index) {
+        <tr [ngClass]="rowStyles" (click)="onRowClick($event)">
+          <td>{{sr+1}}</td>
+          @for (column of columns; track column) {
+            <td>{{row[column.key]}}</td>
+          }
+          @if (showActionColumn) {
+            <td>
+              @for (action of actionColumn; track action) {
+                <app-button [buttonProps]="prepareActionButton(action, row, sr)">
+                  {{ action.buttonProps.label }}
+                </app-button>
+              }
+            </td>
+          }
+        </tr>
+      }
+      @if (!data || data.length === 0) {
+        <tr>
+          <td [attr.colspan]="showActionColumn ? columns.length + 1 : columns.length">
+            No Data Available
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

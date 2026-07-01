@@ -1,0 +1,15 @@
+<h1 class="text-[35px] font-bold text-center">Users Management Page</h1>
+<p class="my-3">View all registered users and update their roles as needed. This ensures efficient oversight and
+  accurate role assignments within the system.</p>
+<app-card [title]="'Users List'" baseStyles="card card-compact bg-base-100 shadow-xl border border-[#5D5D81] my-5">
+  @defer(when tableData()){
+  <app-table [data]="tableData()" [columns]="tableColumns" [showActionColumn]="true" [actionColumn]="tableActions" />
+  } @placeholder{
+    <app-loading [styles]="loadingStyles" />
+  }
+</app-card>
+@if (changeRoleFormVisibility) {
+<app-card baseStyles="card card-compact bg-base-100 shadow-xl border border-[#5D5D81]">
+  <change-role-form [username]="selectedUsername" />
+</app-card>
+}

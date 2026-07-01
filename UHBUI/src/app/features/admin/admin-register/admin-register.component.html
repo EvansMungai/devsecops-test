@@ -1,0 +1,35 @@
+<h1 class="text-[35px] font-bold text-center">Hostel Management Page</h1>
+<p class="my-3">Seamlessly register hostels and
+  rooms,
+  making them available for students to book. Ensure all details are accurate to provide a smooth booking experience
+  for users.</p>
+<div class="flex gap-4 my-4">
+  <app-button [buttonProps]="registerHostelButton()" />
+  <app-button [buttonProps]="registerRoomButton()" />
+</div>
+@if (registerHostelVisibility) {
+<app-card
+  baseStyles="card card-compact bg-base-100 shadow-xl border border-[#5D5D81]"><hostel-registration-form /></app-card>
+}
+@if (registerRoomVisibility) {
+<app-card
+  baseStyles="card card-compact bg-base-100 shadow-xl border border-[#5D5D81] mt-5"><rooms-registration-form /></app-card>
+}
+@if (!registerHostelVisibility) {
+<app-card [title]="'Hostels List'" baseStyles="card card-compact bg-base-100 shadow-xl border border-[#5D5D81] my-5">
+  @defer(when hostelsData()){
+  <app-table [data]="hostelsData()" [columns]="hostelColumns" />
+  } @placeholder{
+  <app-loading [styles]="loadingStyles" />
+  }
+</app-card>
+}
+@if (!registerRoomVisibility) {
+<app-card [title]="'Rooms List'" baseStyles="card card-compact bg-base-100 shadow-xl border border-[#5D5D81] my-5">
+  @defer(when roomsData()){
+  <app-table [data]="roomsData()" [columns]="roomColumns" />
+  } @placeholder{
+  <app-loading [styles]="loadingStyles" />
+  }
+</app-card>
+}

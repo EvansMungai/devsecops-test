@@ -1,0 +1,120 @@
+name: Secure SAST & SCA Pipeline
+
+on: 
+  workflow_call:
+    
+permissions:
+  contents: read
+
+jobs:
+  sonar-scan:
+    name: Run SonarQube Cloud Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0'
+
+      - name: Install SonarScanner Tool
+        run: dotnet tool install --global dotnet-sonarscanner
+
+      - name: Build and Analyze
+        env:
+          PROJECT_KEY: ${{ secrets.PROJECT_KEY }}
+          ORGANIZATION_KEY: ${{ secrets.ORGANIZATION_KEY }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
+
+        run: |
+          dotnet-sonarscanner begin \
+            /k:"$PROJECT_KEY" \
+            /o:"$ORGANIZATION_KEY" \
+            /d:sonar.host.url="https://sonarcloud.io" \
+            /d:sonar.token="$SONAR_TOKEN" \
+            /d:sonar.qualitygate.wait=true
+
+          dotnet build UHB.sln --configuration Release
+
+          dotnet-sonarscanner end /d:sonar.token="$SONAR_TOKEN"
+
+  trivy-scan: 
+    name: Trivy Dependency & Image Scan
+    needs: sonar-scan
+    runs-on: ubuntu-latest
+    permissions: 
+      contents: read
+      security-events: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0'
+
+      - name: Restore dependencies
+        run: dotnet restore UHB.sln
+
+      - name: Scan Repository files
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
+        with:
+          scan-type: fs
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-fs-results.sarif'
+          severity: 'HIGH,CRITICAL'
+
+      - name: Upload FS Scan Results to GitHub
+        uses: github/codeql-action/upload-sarif@v4
+        if: always()
+        with:
+          sarif_file: 'trivy-fs-results.sarif'
+          category: 'trivy-fs'
+
+      - name: Generate CycloneDX SBOM
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
+        with: 
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'cyclonedx'
+          output: 'sbom.json'
+
+      - name: Save SBOM as Pipeline Artifact
+        uses: actions/upload-artifact@v4
+        with: 
+          name: application-sbom
+          path: sbom.json
+
+      - name: Build Local Docker image
+        run: | 
+          docker build -t uhbapi:${{ github.sha }} -f UHB/Dockerfile .
+
+      - name: Scan the build image
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
+        with: 
+          scan-type: 'image'
+          image-ref: 'uhbapi:${{ github.sha }}'
+          format: 'sarif'
+          output: 'trivy-image-results.sarif'
+          severity: 'HIGH,CRITICAL'
+          exit-code: 0 
+          cmd-options: '--skip-version-check'
+
+      - name: Upload Image Scan Results to GitHub
+        uses: github/codeql-action/upload-sarif@v4
+        if: always()
+        with:
+          sarif_file: 'trivy-image-results.sarif'
+          category: 'trivy-image'

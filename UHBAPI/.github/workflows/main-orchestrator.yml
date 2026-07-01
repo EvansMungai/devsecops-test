@@ -1,0 +1,27 @@
+name: Main CI Pipeline Orchestrator
+
+on: 
+  push: 
+    branches:
+      - dev
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * 1'
+  
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+jobs:
+  run-sast-sca:
+    uses: ./.github/workflows/sast-sca.yml
+    secrets: inherit
+
+  run-dast:
+    needs: run-sast-sca
+    if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    uses: ./.github/workflows/dast-scan.yml

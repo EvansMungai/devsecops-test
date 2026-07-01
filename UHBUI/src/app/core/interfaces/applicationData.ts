@@ -1,0 +1,22 @@
+export interface ApplicationData {
+    applicationPeriod: string,
+    registrationNo: string,
+    preferredHostel: string,
+    status?: string,
+    roomNo?: string,
+    disability: boolean,
+    disabilityDetails?: string,
+    accommodatedBefore: boolean,
+    accommodationPeriod?: string,
+    isSponsored: boolean,
+    sponsor?: string,
+    receivesHelb: boolean,
+    helbAmount?: string,
+    receivedBursary: boolean,
+    bursaryAmount?: string,
+    workStudyBenefitsBefore: boolean,
+    workStudyPeriod?: string,
+    specialExamsOnFinancialGrounds: boolean,
+    specialExamPeriod?: string,
+    reasonsForConsideration: string
+}

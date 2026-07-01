@@ -1,0 +1,171 @@
+<div class="font-sans text-gray-800">
+  <div class="max-w-6xl mx-auto px-4 py-6">
+    <app-button
+      [buttonProps]="{text: '← Back to Applications', variant: 'secondary',size: 'sm', buttonClass: 'mb-6 hover:underline', route:'/uhb/housekeeper' }" />
+
+    <div class="rounded-lg shadow-md p-6">
+      @defer(when studentDetails()){
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Application Details</h1>
+        <span class="px-4 py-1 rounded-full text-sm font-semibold badge badge-warning text-neutral">
+          {{ applicationDetails()?.status}}
+        </span>
+      </div>
+
+      <div class="mb-8">
+        <h3 class="text-lg font-semibold pb-2 border-b border-gray-200 mb-4">
+          Personal Information
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <span class="font-medium text-gray-600">Application ID:</span>
+            <span class="ml-2">{{ applicationDetails()?.applicationNo}}</span>
+          </div>
+          <div>
+            <span class="font-medium text-gray-600">Application Period:</span>
+            <span class="ml-2">{{ applicationDetails()?.applicationPeriod}}</span>
+          </div>
+          <div>
+            <span class="font-medium text-gray-600">Student ID:</span>
+            <span class="ml-2">{{applicationDetails()?.registrationNo}}</span>
+          </div>
+          <div>
+            <span class="font-medium text-gray-600">Gender:</span>
+            <span class="ml-2">{{studentDetails()?.gender}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-8">
+        <h3 class="text-lg font-semibold pb-2 border-b border-gray-200 mb-4">
+          Needs Assessment Information
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <span class="font-medium text-gray-600">Disabled:</span>
+            <span class="ml-2">{{applicationDetails()?.disability}}</span>
+          </div>
+          <div>
+            <span class="font-medium text-gray-600">Disability Details:</span>
+            <span class="ml-2">{{applicationDetails()?.disabilityDetails || 'Not applicable'}}</span>
+          </div>
+          <div>
+            <span class="font-medium text-gray-600">Accommodated within university before:</span>
+            <span class="ml-2">{{applicationDetails()?.accommodatedBefore}}</span>
+          </div>
+          <div>
+            <span class="font-medium text-gray-600">Accommodation Period:</span>
+            <span class="ml-2">{{applicationDetails()?.accomodationPeriod || 'Not applicable'}}</span>
+          </div>
+          <div>
+            <span class="font-medium text-gray-600">Sponsored:</span>
+            <span class="ml-2">{{applicationDetails()?.isSponsored}}</span>
+          </div>
+          <div>
+            <span class="font-medium text-gray-600">Sponsor Details:</span>
+            <span class="ml-2">{{applicationDetails()?.sponsor || 'Not applicable'}}</span>
+          </div>
+          <div>
+            <span class="font-medium text-gray-600">Receives Helb:</span>
+            <span class="ml-2">{{applicationDetails()?.receivesHelb}}</span>
+          </div>
+          <div>
+            <span class="font-medium text-gray-600">Helb Amount:</span>
+            <span class="ml-2">{{applicationDetails()?.helbAmount || 'Not applicable'}}</span>
+          </div>
+          <div>
+            <span class="font-medium text-gray-600">Received Bursary Before:</span>
+            <span class="ml-2">{{applicationDetails()?.receivedBursary}}</span>
+          </div>
+          <div>
+            <span class="font-medium text-gray-600">Bursary Amount:</span>
+            <span class="ml-2">{{applicationDetails()?.bursaryAmount || 'Not applicable'}}</span>
+          </div>
+          <div>
+            <span class="font-medium text-gray-600">Work Study Benefits Before:</span>
+            <span class="ml-2">{{applicationDetails()?.workStudyBenefitsBefore}}</span>
+          </div>
+          <div>
+            <span class="font-medium text-gray-600">Work Study Period:</span>
+            <span class="ml-2">{{applicationDetails()?.workStudyPeriod || 'Not applicable'}}</span>
+          </div>
+          <div>
+            <span class="font-medium text-gray-600">Deferred before:</span>
+            <span class="ml-2">{{applicationDetails()?.specialExamsOnFinancialGrounds}}</span>
+          </div>
+          <div>
+            <span class="font-medium text-gray-600">Defer Period:</span>
+            <span class="ml-2">{{applicationDetails()?.specialExamPeriod || 'Not applicable'}}</span>
+          </div>
+        </div>
+        <div class="mt-4">
+          <span class="font-medium text-gray-600">Reasons for consideration:</span>
+          <span class="ml-2">{{applicationDetails()?.reasonsForConsideration}}</span>
+        </div>
+      </div>
+
+      <div class="mb-8">
+        <h3 class="text-lg font-semibold pb-2 border-b border-gray-200 mb-4">
+          Accommodation Preferences
+        </h3>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <span class="font-medium text-gray-600">Hostel Preference:</span>
+            <span class="ml-2">{{applicationDetails().preferredHostel}} Hostel Residence</span>
+          </div>
+          <div>
+            <span class="font-medium text-gray-600">Hostel Type:</span>
+            <span class="ml-2">{{studentDetails()?.gender}} Hostel</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-8">
+        <h3 class="text-lg font-semibold pb-2 border-b border-gray-200 mb-4">
+          Review Application
+        </h3>
+        <div class="bg-blue-100 rounded-md p-6">
+          <h3 class="text-lg font-semibold text-blue-600 mb-4">Review Application</h3>
+          <form id="reviewApplicationForm" [formGroup]="reviewApplication" (ngSubmit)="onSubmit()" #form="ngForm">
+            <div class="grid md:grid-cols-2 gap-6 mb-4">
+              <div>
+                <label for="status" class="block mb-2 font-medium">Accept or Reject:</label>
+                <select id="status" formControlName="status"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required>
+                  <option value="" selected disabled>Review Application</option>
+                  <option value="Accepted">Accept</option>
+                  <option value="Rejected">Reject</option>
+                </select>
+                @if (reviewApplication.get('status')?.invalid && form.submitted) {
+                <p class="text-red-500 text-xs ml-1">
+                  Review application value is required.
+                </p>
+                }
+              </div>
+              @if (reviewApplication.get('status')?.value === 'Accepted') {
+              <div>
+                <label for="hostelBuilding" class="block mb-2 font-medium">Hostel Building:</label>
+                <select id="hostelBuilding" formControlName="preferredHostel"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <option value="">Select Hostel Building</option>
+                  @for(hostel of hostelDetails(); track hostel){
+                  <option value="{{hostel}}">{{hostel}}</option>
+                  }
+                </select>
+              </div>
+              }
+            </div>
+
+            <app-button [buttonProps]="submitButtonProps" />
+          </form>
+          <app-toast [styles]="toastStyles()" [showToast]="toastVisible()" [alertStyle]="alertStyles()"
+            [alertMessage]="alertMessage()" />
+        </div>
+      </div>
+      } @placeholder {
+      <app-loading [styles]="loadingStyles" />
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+name: DAST Security Scan
+
+on:
+  workflow_call:
+  
+jobs:
+  zap-dast:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Start application
+        run: |
+          docker-compose up -d uhb
+          timeout 60s bash -c 'until curl -s -f http://localhost:8080/swagger/v1/swagger.json > /dev/null; do sleep 2; done'
+
+      - name: Run ZAP API Scan Action
+        uses: zaproxy/action-api-scan@5158fe4740e53a2efec746bf986a427f714902ff
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          format: openapi
+          target: 'http://localhost:8080/swagger/v1/swagger.json'
+          rules_file_name: 'zap.conf'
+          cmd_options: '-r api-report.html --network host'
+          docker_name: 'ghcr.io/zaproxy/zaproxy:stable'
+
+      - name: Stop Containers
+        if: always()
+        run: docker compose down
+
+      - name: Upload Security Report Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-dast-report
+          path: |
+            api-report.html

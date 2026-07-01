@@ -1,0 +1,52 @@
+services:
+  db: 
+    image: mysql:latest
+    container_name: mysql-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      # - ./uhb.sql:/docker-entrypoint-initdb.d/uhb.sql
+      - mysql_data:/var/lib/mysql
+    networks:
+      - uhb-network
+
+  backend:
+    build: 
+      context: ./UHBAPI
+      dockerfile: UHB/Dockerfile
+    container_name: uhb_backend
+    restart: always
+    ports:
+      - "5000:8080"
+      - "5001:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    env_file:
+      .env
+    depends_on:
+      - db
+    networks:
+      - uhb-network
+
+  frontend:
+    build:
+      context: ./UHBUI
+      dockerfile: Dockerfile
+    container_name: uhb-frontend
+    restart: always
+    ports: 
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - uhb-network
+
+networks:
+  uhb-network:
+    driver: bridge
+
+volumes:
+  mysql_data: 

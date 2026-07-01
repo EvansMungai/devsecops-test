@@ -1,0 +1,13 @@
+<h1 class="text-[35px] font-bold">SUCCESSFUL APPLICANTS</h1>
+<p class="mt-3">Access a comprehensive and organized list of all successful applications. Essential details such
+    as applicant names, application period and application statuses are clearly displayed in a user-friendly table.
+</p>
+@defer(when tableData()){
+<app-card [title]="'List of successful applicants'" baseStyles="card card-compact bg-base-100 shadow-xl my-3">
+    <app-table [data]="tableData()" [columns]="tableColumns" />
+</app-card>
+} @placeholder{
+<app-card [title]="'List of successful applicants'" baseStyles="card card-compact bg-base-100 shadow-xl my-3">
+    <app-loading [styles]="loadingStyles" />
+</app-card>
+}

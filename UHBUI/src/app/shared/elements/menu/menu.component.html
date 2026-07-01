@@ -1,0 +1,16 @@
+<ul class="menu bg-secondary text-base-content min-h-full p-4 w-[220px]">
+  <div class="flex justify-center pb-5">
+    <span class="text-xl text-white">Kimathi University<br />Booking System</span>
+  </div>
+  @for (link of links; track $index) {
+  <li class="text-[18px] py-2 text-white"><a [routerLink]="link.url"><fa-icon [icon]="link.icon"
+        class="pr-2"></fa-icon>{{link.title}}</a>
+  </li>
+  }
+  <li class="text-[18px] py-2 text-white">
+    <button (click)="logout()" class="text-[18px] py-2 text-white"><fa-icon [icon]="faExit"
+        class="pr-2"></fa-icon>Logout</button>
+  </li>
+</ul>
+<app-toast [styles]="toastStyles()" [showToast]="toastVisible()" [alertStyle]="alertStyles()"
+  [alertMessage]="alertMessage()" />

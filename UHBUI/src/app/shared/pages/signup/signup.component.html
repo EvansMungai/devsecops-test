@@ -1,0 +1,32 @@
+<div class="min-h-screen flex items-center justify-center bg-primary py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        <div>
+            <h2 class="mt-6 text-center text-3xl font-extrabold">Create your account</h2>
+            <p class="mt-2 text-center text-sm text-gray-900"> Already have an account?
+                <a routerLink="/login" class="font-medium text-indigo- hover:text-indigo-500">
+                    Sign in here
+                </a>
+            </p>
+        </div>
+
+        <form class="mt-8 space-y-6" id="signupForm" [formGroup]="signupForm" (ngSubmit)="onSubmit()" #form="ngForm">
+            <div class="rounded-md p-3 shadow-sm space-y-4">
+                <div>
+                    <label for="username" class="block text-lg font-medium text-gray-700 mb-1">Username</label>
+                    <input id="username" name="username" type="text" placeholder="Choose a username" formControlName="userName"
+                        class="input input-bordered input-md bg-white w-full mb-2" />
+                </div>
+
+                <div>
+                    <label for="password" class="block text-lg font-medium text-gray-700 mb-1">Password</label>
+                    <input id="password" name="password" type="password" placeholder="Choose a password" formControlName="password"
+                        class="input input-bordered input-md bg-white w-full mb-2" />
+                </div>
+                <div class="mt-4">
+                    <app-button [buttonProps]="submitButtonProps" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <app-toast [styles]="toastStyles()" [showToast]="toastVisible()" [alertStyle]="alertStyles()" [alertMessage]="alertMessage()" />
+</div>

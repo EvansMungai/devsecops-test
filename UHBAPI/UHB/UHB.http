@@ -1,0 +1,6 @@
+@UHB_HostAddress = http://localhost:5269
+
+GET {{UHB_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,8 @@
+<button [type]="buttonType" [disabled]="buttonProps.disabled" [class]="buttonClasses" (click)="onClick()"
+  [attr.aria-disabled]='buttonProps.disabled'
+  [attr.form]="isSubmitButton() && buttonProps.formId ? buttonProps.formId: null">
+  <ng-content></ng-content>
+  @if (buttonProps.text) {
+    <span>{{buttonProps.text}}</span>
+  }
+</button>

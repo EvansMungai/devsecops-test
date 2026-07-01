@@ -1,0 +1,49 @@
+<h1 class="text-[35px] font-bold text-center">REGISTER A HOSTEL</h1>
+<p class="my-5">Use this form to provide detailed information about the hostel, including its name, location, and
+features. Ensure all fields are accurately filled out to help students make informed booking decisions.</p>
+<form id="registerHostelForm" [formGroup]="registerHostelForm" #form="ngForm" (ngSubmit)="onSubmit()"
+  class="flex flex-1 flex-col mx-auto m-[2%] p-[2%] shadow-md rounded-lg">
+  <h3 class="text-lg font-bold text-center">HOSTEL REGISTRATION FORM</h3>
+
+  <label for="hostelNo" class="text-lg font-medium">Hostel Number:</label>
+  <input type="text" id="hostelNo" formControlName="hostelNo" class="input input-bordered input-sm bg-white w-full"
+    placeholder="Hostel Number">
+    @if (registerHostelForm.get('hostelNo')?.invalid && form.submitted) {
+      <p class="text-red-500 text-xs ml-1">
+        Hostel Number is required.
+      </p>
+    }
+    <label for="hostelName" class="text-lg font-medium">Hostel Name:</label>
+    <input type="text" id="hostelName" formControlName="hostelName" class="input input-bordered input-sm bg-white w-full bg-white"
+      placeholder="Hostel Name" />
+      @if (registerHostelForm.get('hostelName')?.invalid && form.submitted) {
+        <p class="text-red-500 text-xs ml-1">
+          Hostel Name is required.
+        </p>
+      }
+      <label for="capacity" class="text-lg font-medium">Hostel Capacity:</label>
+      <input type="text" id="capacity" formControlName="capacity" class="input input-bordered input-sm bg-white w-full bg-white"
+        placeholder="Hostel Capacity" />
+        @if (registerHostelForm.get('capacity')?.invalid && form.submitted) {
+          <p
+            class="text-red-500 text-xs ml-1">
+            Hostel Capacity is required.
+          </p>
+        }
+        <label for="type" class="text-lg font-medium">Hostel Type:</label>
+        <select id="type" formControlName="type"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full bg-white">
+          <option value="" selected disabled>Select Hostel Type</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+        @if (registerHostelForm.get('type')?.invalid && form.submitted) {
+          <p class="text-red-500 text-xs ml-1">
+            Hostel Type is required.
+          </p>
+        }
+        <div class="mt-4">
+          <app-button [buttonProps]="submitButtonProps" />
+        </div>
+        <app-toast [showToast]="toastVisible()" [styles]="toastStyles()" [alertStyle]="alertStyles()" [alertMessage]="alertMessage()" />
+      </form>

@@ -1,0 +1,218 @@
+<h1 class="text-[35px] font-bold text-center">BOOK A ROOM</h1>
+<p class="my-1 sm:my-5">Welcome to the hostel booking page! This is the first step towards securing your place in our
+  on-campus
+  accommodation. To apply for internal hostel booking, please fill out the form below with accurate and complete
+  information.This information will help us process your application efficiently and match you to the most suitable
+  accommodation. We're here to make your stay comfortable and convenient — Welcome Home!</p>
+<form [formGroup]="bookingForm" id="bookingForm" (ngSubmit)="onSubmit()" #form="ngForm"
+  class="flex flex-1 flex-col sm:mx-auto sm:m-[2%] my-4 p-[2%] border border-[#5D5D81] shadow-xl rounded-lg">
+  <h3 class="text-lg font-bold text-center">HOSTEL APPLICATION FORM</h3>
+
+  <h4 class="text-lg font-bold sm:ml-5 sm:mt-5 mb-3">SECTION I: PERSONAL DETAILS</h4>
+  <label for="registrationNo" class="text-lg font-medium">Registration Number:</label>
+  <input type="text" id="registrationNo" formControlName="registrationNo"
+    class="input input-bordered input-sm bg-white w-full mb-2" placeholder="Registration Number"
+    [ngClass]="{'input-error': bookingForm.get('registrationNo')?.invalid && form.submitted }">
+  @if (bookingForm.get('registrationNo')?.invalid && form.submitted) {
+  <p class="text-error text-xs ml-1">
+    Registration Number is required.
+  </p>
+  }
+  @if (bookingForm.get('registrationNo')?.hasError('pattern')) {
+  <p class="text-error text-xs my-1">
+    Enter a valid registration number. eg. A123-45-6789/2023
+  </p>
+  }
+  <label for="hostelName" class="text-lg font-medium">Hostel Name:</label>
+  <select class="select bg-white select-sm w-full mb-2" id="hostelName" formControlName="hostelName"
+    [ngClass]="{'input-error': bookingForm.get('hostelName')?.invalid && form.submitted }">
+    <option value="" disabled selected>Select Hostel</option>
+    <option value="Batian">Batian</option>
+    <option value="Serengeti">Serengeti</option>
+  </select>
+  @if (bookingForm.get('hostelName')?.invalid && form.submitted) {
+  <p class="text-error text-xs ml-1">
+    Hostel Name is required.
+  </p>
+  }
+  <label for="applicationPeriod" class="text-lg font-medium">Application Period:</label>
+  <input type="text" id="applicationPeriod" formControlName="applicationPeriod"
+    class="input input-bordered input-sm bg-white w-full mb-2" placeholder="Application Period"
+    [ngClass]="{'input-error': bookingForm.get('applicationPeriod')?.invalid && form.submitted }" />
+  @if (bookingForm.get('applicationPeriod')?.invalid && form.submitted) {
+  <p class="text-error text-xs ml-1">
+    Application Period is required.
+  </p>
+  }
+  <div class="flex flex-col space-y-3 sm:flex-row sm:items-center sm:space-y-0">
+    <label for="disabled" class="text-lg font-medium sm:mr-3">
+      Do you live with any disability?
+    </label>
+    <div class="flex items-center space-x-1">
+      <label for="disabled" class="text-md font-medium mr-1">YES</label>
+      <input class="form-check-input mr-2" type="radio" formControlName="isDisabled" id="disabled" value="YES" />
+
+      <label for="notdisabled" class="text-md font-medium mr-1">NO</label>
+      <input class="form-check-input" type="radio" formControlName="isDisabled" id="notdisabled" value="No" />
+    </div>
+    @if (bookingForm.get('isDisabled')?.invalid && form.submitted) {
+    <p class="text-error text-xs mt-1 sm:ml-1 sm:mt-0">
+      Details on whether you are disabled is required.
+    </p>
+    }
+  </div>
+  <label for="disabilityDetails" class="text-sm font-medium mr-0 sm:mr-3">If yes, provide the disability
+    details:</label>
+  <input type="text" formControlName="disabilityDetails" class="input input-bordered input-sm bg-white w-full"
+    id="disabilityDetails" placeholder="Disability Details" />
+
+  <h4 class="text-lg font-bold sm:ml-5 mt-5 mb-3">SECTION II: NEEDS ASSESSMENT (Attach evidence where needed)</h4>
+
+  <!-- Accommodation question -->
+  <div class="flex flex-col space-y-3 sm:flex-row sm:items-center sm:space-y-0">
+    <label for="accommodationBefore" class="text-lg font-medium mr-0 sm:mr-3">
+      Have you ever been accommodated within the university before?
+    </label>
+    <div class="flex items-center space-x-1">
+      <label for="accommodationBefore" class="text-md font-medium mr-1">YES</label>
+      <input class="form-check-input mr-2" type="radio" formControlName="accommodationBefore" id="accommodationBefore"
+        value="YES" />
+      <label for="notAccommodatedBefore" class="text-md font-medium mr-1">NO</label>
+      <input class="form-check-input" type="radio" formControlName="accommodationBefore" id="notAccommodatedBefore"
+        value="No" />
+    </div>
+    @if (bookingForm.get('accommodationBefore')?.invalid && form.submitted) {
+    <p class="text-error text-xs mt-1 sm:ml-1 sm:mt-0">
+      Details on whether you have been accommodated within the school before are required.
+    </p>
+    }
+  </div>
+  <label for="accommodationPeriod" class="text-sm font-medium mr-0 sm:mr-3">If yes, provide the accommodation
+    period:</label>
+  <input type="text" formControlName="accommodationPeriod" class="input input-bordered input-sm bg-white w-full mb-2"
+    id="accommodationPeriod" placeholder="Accommodation Period" />
+
+  <!-- Sponsored question -->
+
+  <label for="sponsoredBefore" class="text-lg font-medium mr-0 sm:mr-3">
+    Are you sponsored by an organization recognized by the University and sponsorship includes accommodation?
+  </label>
+  <div class="flex items-center space-x-1">
+    <label for="sponsoredBefore" class="text-sm font-medium mr-1">YES</label>
+    <input class="form-check-input mr-2" type="radio" formControlName="isSponsored" id="sponsoredBefore" value="YES" />
+    <label for="notSponsored" class="text-sm font-medium mr-1">NO</label>
+    <input class="form-check-input" type="radio" formControlName="isSponsored" id="notSponsored" value="No" />
+  </div>
+  @if (bookingForm.get('isSponsored')?.invalid && form.submitted) {
+  <p class="text-error text-xs mt-1 sm:ml-1 sm:mt-0">
+    Details on whether you are sponsored are required
+  </p>
+  }
+
+  <label for="sponsor" class="text-sm font-medium mr-0 sm:mr-3">If yes, provide the name of the
+    sponsor:</label>
+  <input type="text" formControlName="sponsor" class="input input-bordered input-sm bg-white w-full mb-2" id="sponsor"
+    placeholder="Name of sponsor" />
+
+  <div class="flex flex-col space-y-3 sm:flex-row sm:items-center sm:space-y-0">
+    <label for="receivesHelb" class="text-lg font-medium mr-0 sm:mr-3">
+      Do you receive HELB?
+    </label>
+    <div class="flex items-center space-x-1">
+      <label for="receivesHelb" class="text-md font-medium mr-1">YES</label>
+      <input class="form-check-input mr-2" type="radio" formControlName="receivesHelb" id="receivesHelb" value="YES" />
+      <label for="noHelb" class="text-md font-medium mr-1">NO</label>
+      <input class="form-check-input" type="radio" formControlName="receivesHelb" id="noHelb" value="No" />
+    </div>
+    @if (bookingForm.get('receivesHelb')?.invalid && form.submitted) {
+    <p class="text-error text-xs mt-1 sm:ml-1 sm:mt-0">
+      Details on whether you receive HELB are required.
+    </p>
+    }
+  </div>
+  <label for="helbAmount" class="text-sm font-medium mr-0 sm:mr-3">If yes, how much per year:</label>
+  <input type="text" formControlName="helbAmount" class="input input-bordered input-sm bg-white w-full mb-2" id="helbAmount"
+    placeholder="HELB Amount" />
+
+  <!-- Bursary question -->
+  <div class="flex flex-col space-y-3 sm:flex-row sm:items-center sm:space-y-0">
+    <label for="receivesBursary" class="text-lg font-medium mr-0 sm:mr-3">
+      Have you ever benefitted from the university bursary before?
+    </label>
+    <div class="flex items-center space-x-1">
+      <label for="receivesBursary" class="text-md font-medium mr-1">YES</label>
+      <input class="form-check-input mr-2" type="radio" formControlName="receivesBursary" id="receivesBursary"
+        value="YES" />
+      <label for="noBursary" class="text-md font-medium mr-1">NO</label>
+      <input class="form-check-input" type="radio" formControlName="receivesBursary" id="noBursary" value="No" />
+    </div>
+    @if (bookingForm.get('receivesBursary')?.invalid && form.submitted) {
+    <p class="text-error text-xs mt-1 sm:ml-1 sm:mt-0">
+      Details on whether you receive bursary are required.
+    </p>
+    }
+  </div>
+  <label for="bursaryAmount" class="text-sm font-medium mr-0 sm:mr-3">If yes, state the amount awarded:</label>
+  <input type="text" formControlName="bursaryAmount" class="input input-bordered input-sm bg-white w-full mb-2" id="bursaryAmount"
+    placeholder="Amount awarded" />
+
+  <!-- Work Study question -->
+  <div class="flex flex-col space-y-3 sm:flex-row sm:items-center sm:space-y-0">
+    <label for="workStudyBefore" class="text-lg font-medium mr-0 sm:mr-3">
+      Have you ever benefitted from the university's work study program before?
+    </label>
+    <div class="flex items-center space-x-1">
+      <label for="workStudyBefore" class="text-md font-medium mr-1">YES</label>
+      <input class="form-check-input mr-2" type="radio" formControlName="workStudyBenefitsBefore" id="workStudyBefore"
+        value="YES" />
+      <label for="noWorkStudyBenefits" class="text-md font-medium mr-1">NO</label>
+      <input class="form-check-input" type="radio" formControlName="workStudyBenefitsBefore" id="noWorkStudyBenefits"
+        value="No" />
+    </div>
+    @if (bookingForm.get('workStudyBenefitsBefore')?.invalid && form.submitted) {
+    <p class="text-error text-xs mt-1 sm:ml-1 sm:mt-0">
+      Details on whether you have benefitted from the work study program provided in the school are required.
+    </p>
+    }
+  </div>
+  <label for="workStudyPeriod" class="text-sm font-medium mr-0 sm:mr-3">If yes, specify the period:</label>
+  <input type="text" formControlName="workStudyPeriod" class="input input-bordered input-sm bg-white w-full mb-2"
+    id="workStudyPeriod" placeholder="Work study period" />
+
+  <!-- Deferred studies question -->
+  <div class="flex flex-col space-y-3 sm:flex-row sm:items-center sm:space-y-0">
+    <label for="specialExamsBefore" class="text-lg font-medium mr-0 sm:mr-3">
+      Have you ever deferred studies on financial grounds?
+    </label>
+    <div class="flex items-center space-x-1">
+      <label for="specialExamsBefore" class="text-md font-medium mr-1">YES</label>
+      <input class="form-check-input mr-2" type="radio" formControlName="specialExamsBefore" id="specialExamsBefore"
+        value="YES" />
+      <label for="notDeferred" class="text-md font-medium mr-1">NO</label>
+      <input class="form-check-input" type="radio" formControlName="specialExamsBefore" id="notDeferred" value="No" />
+    </div>
+    @if (bookingForm.get('specialExamsBefore')?.invalid && form.submitted) {
+    <p class="text-error text-xs mt-1 sm:ml-1 sm:mt-0">
+      Details on whether you have deferred studies before on financial grounds are required.
+    </p>
+    }
+  </div>
+  <label for="specialExamsPeriod" class="text-sm font-medium mr-0 sm:mr-3">If yes, specify the period:</label>
+  <input type="text" formControlName="specialExamsPeriod" class="input input-bordered input-sm bg-white w-full mb-2"
+    id="specialExamsPeriod" placeholder="Defer period" />
+
+  <label for="considerationReasons" class="text-lg font-medium">Briefly describe why you should be considered
+    for a space within the university hostels:</label>
+  <textarea class="textarea textarea-bordered bg-white w-full" formControlName="considerationReasons" id="considerationReasons"
+    placeholder="Reasons for consideration"
+    [ngClass]="{'textarea-error': bookingForm.get('considerationReasons')?.invalid && form.submitted }"></textarea>
+  @if (bookingForm.get('considerationReasons')?.invalid && form.submitted) {
+  <p class="text-error text-xs ml-1">
+    Reasons for consideration is a required field.
+  </p>
+  }
+  <div class="mt-4">
+    <app-button [buttonProps]="submitButtonProps" />
+  </div>
+  <app-toast [styles]="toastStyles()" [showToast]="toastVisible()" [alertStyle]="alertStyles()" [alertMessage]="alertMessage()" />
+</form>

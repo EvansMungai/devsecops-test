@@ -1,0 +1,25 @@
+<h1 class="text-2xl md:text-[35px] font-bold">Welcome to the Housekeeper dashboard!</h1>
+<p class="my-3">Access a comprehensive and organized overview of all accommodation applications. Essential details such
+    as applicant names, room requests, and application statuses are clearly displayed in a user-friendly table. This
+    page allows you to effortlessly review and manage each application, helping you make informed decisions with ease
+</p>
+<div class="flex flex-col md:flex-row">
+    <app-card [title]="'Total Applications'" baseStyles="card bg-accent shadow-xl rounded-lg m-3 flex-1">
+        <div class="flex flex-1">
+            <p class="font-bold m-1">{{tableData()?.length}}</p>
+        </div>
+    </app-card>
+    <app-card [title]="'Accepted Applications'" baseStyles="card bg-accent shadow-xl rounded-lg m-3 py-1 flex-1">
+        <p class="font-bold">{{acceptCount}}</p>
+    </app-card>
+    <app-card [title]="'Rejected Applications'" baseStyles="card bg-accent shadow-xl rounded-lg m-3 py-1 flex-1">
+        <p class="font-bold">{{rejectCount}}</p>
+    </app-card>
+</div>
+<app-card [title]="'Total Applications'" baseStyles="card card-lg bg-base-100 shadow-xl my-3">
+    @defer(when tableData()){
+    <app-table [data]="tableData()" [columns]="tableColumns" [showActionColumn]="true" [actionColumn]="tableActions" />
+    } @placeholder {
+    <app-loading [styles]="loadingStyles" />
+    }
+</app-card>
