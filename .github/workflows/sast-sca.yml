@@ -40,6 +40,7 @@ jobs:
         run: dotnet tool install --global dotnet-sonarscanner
 
       - name: Build and Analyze
+        working_directory: ./UHBAPI
         env: 
           PROJECT_KEY: ${{ secrets.BACKEND_PROJECT_KEY }}
           ORGANIZATION_KEY: ${{ secrets.ORGANIZATION_KEY }}
@@ -53,7 +54,7 @@ jobs:
             /d:sonar.token="$SONAR_TOKEN" \
             # /d:sonar.qualitygate.wait=true
 
-          dotnet build UHBAPI/UHB.sln --configuration Release
+          dotnet build UHB.sln --configuration Release
 
           dotnet-sonarscanner end /d:sonar.token="$SONAR_TOKEN"
 
