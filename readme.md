@@ -1,6 +1,6 @@
 # DevSecOps test project
 
-A project where CI/CD pipeline don't just delivery code — they enforce security best practices. By embracing the Shift Left principle, this project abandons the outdated practice of treating security as an afterthought in the software development lifecycle. Using automated security testing directly in CI/CD pipelines, vulnerabilities are detected and remediated early making secure software delivery a continuous process rather than a final checkpoint. 
+A project where CI/CD pipeline don't just delivery code — they enforce security best practices. By embracing the Shift Left principle, this project abandons the outdated practice of treating security as an afterthought in the software development lifecycle. Using automated security testing directly in CI/CD pipelines, vulnerabilities are detected and remediated early making secure software delivery a continuous process rather than a final checkpoint 
 ---
 
 ## Table of Contents
