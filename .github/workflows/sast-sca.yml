@@ -205,7 +205,7 @@ jobs:
           exit-code: 1
 
       - name: Upload backend results to GitHub
-        uses: github/codeql-action/upload-sarif@c35d1b164463ee62a100735382aaaa525c5d3496
+        uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
           sarif-file: 'results/trivy-backend-image-results.sarif'
@@ -236,7 +236,7 @@ jobs:
           exit-code: 1
 
       - name: Upload fs results to GitHub
-        uses: github/codeql-action/upload-sarif@c35d1b164463ee62a100735382aaaa525c5d3496
+        uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
           sarif-file: 'results/trivy-frontend-image-results.sarif'
