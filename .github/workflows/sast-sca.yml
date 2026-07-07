@@ -155,7 +155,7 @@ jobs:
           context: ./UHBAPI
           file: ./UHBAPI/UHB/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/UHB-backend:${{ github.sha }}
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/uhb-backend:${{ github.sha }}
 
   build_frontend_image: 
     name: Build Frontend Image
@@ -178,7 +178,7 @@ jobs:
           context: ./UHBUI
           file: ./UHBUI/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/UHB-frontend:${{ github.sha }}
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/uhb-frontend:${{ github.sha }}
 
   backend-sca-scan:
     name: Backend SCA Image scan
