@@ -5,12 +5,11 @@ A project where CI/CD pipelines don't just deliver code—they enforce security 
 ---
 
 ## Table of Contents
-- [Introduction to the Project](#Order-Processing-Microservice)
-- [Table of Contents](#Table-of-Contents)
-- [✨ Features](#Features)
-- [🏛 Architecture](#Architecture)
-  - [🧠 Architectural Decisions](#Architectural-Decisions)
-  - [⚠️ Tradeoffs](#Tradeoffs)
+- [Introduction to the Project](#devSecOps-test-project)
+- [✨ Features](#features)
+- [🏛 Architecture](#architecture)
+  - [🧠 Architectural Decisions](#architectural-decisions)
+  - [⚠️ Tradeoffs](#tradeoffs)
 - [🚀 Tech Stack](#Tech-Stack)
 
 ---
