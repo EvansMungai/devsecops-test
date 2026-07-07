@@ -211,7 +211,7 @@ jobs:
         uses: github/codeql-action/upload-sarif@c35d1b164463ee62a100735382aaaa525c5d3496
         if: always()
         with:
-          sarif-file: 'results/trivy-backend-image-results.sarif'
+          sarif_file: 'results/trivy-backend-image-results.sarif'
           category: 'trivy-backend-image'
 
   frontend-sca-scan:
@@ -245,5 +245,5 @@ jobs:
         uses: github/codeql-action/upload-sarif@c35d1b164463ee62a100735382aaaa525c5d3496
         if: always()
         with:
-          sarif-file: 'results/trivy-frontend-image-results.sarif'
+          sarif_file: 'results/trivy-frontend-image-results.sarif'
           category: 'trivy-frontend-image'
