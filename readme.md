@@ -12,10 +12,6 @@ A project where CI/CD pipelines don't just deliver code—they enforce security 
   - [🧠 Architectural Decisions](#Architectural-Decisions)
   - [⚠️ Tradeoffs](#Tradeoffs)
 - [🚀 Tech Stack](#Tech-Stack)
-- [⚙️ Setup Instructions](#Setup-Instructions)
-- [📬 API Usage](#API-Usage)
-- [🧪 End-to-End Flow](#End-to-End-Flow)
-- [📊 Observability (Optional)](#Observability-(Optional))
 
 ---
 
