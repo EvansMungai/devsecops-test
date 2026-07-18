@@ -72,3 +72,11 @@ A project where CI/CD pipelines don't just deliver code—they enforce security 
 4. **Orchestration Layer**
    - **Technology:** Docker Compose  
 ---
+
+## What's Next
+
+The next phase is extending the pipeline into a security-driven CD process:
+
+1. Detect newly built Docker images.
+2. Run Dynamic Application Security Testing (DAST) using OWASP ZAP.
+3. Only promote the application to production after all security gates have been successfully passed.
